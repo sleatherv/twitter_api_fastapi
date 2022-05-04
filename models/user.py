@@ -17,6 +17,7 @@ class User(UserBase):
         ...,
         min_length=1,
         max_length=50
+        
     )
     last_name: str = Field(
         ...,
