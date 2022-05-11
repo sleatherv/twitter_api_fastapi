@@ -1,10 +1,11 @@
+import json
 from typing import List
 
-
-from fastapi import FastAPI
+from fastapi import Body, FastAPI
 from fastapi import status
 
 from models import User, Tweet
+from models.user import UserRegister
 
 app = FastAPI()
 
@@ -20,7 +21,7 @@ app = FastAPI()
     summary="Register a user",
     tags=["Users"]
 )
-def signup():
+def signup(user: UserRegister = Body(...)):
     """
     This path operation register a user in the app
 
@@ -32,9 +33,18 @@ def signup():
         - user_id: UUID
         - email: Emailstr
         - last_name: str
-        - birth_date: str
+        - birth_date: date
     """
-    pass
+    with open("users.json", "r+", encoding="utf-8") as f:
+        results = json.loads(f.read())
+        user_dict = user.dict()
+        user_dict["user_id"] = str(user_dict["user_id"])
+        user_dict["birth_date"] = str(user_dict["birth_date"])
+        results.append(user_dict)
+        f.seek(0)
+        f.write(json.dumps(results))
+        return user
+
 
 
 # Login a user
