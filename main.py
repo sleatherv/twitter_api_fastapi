@@ -10,11 +10,9 @@ app = FastAPI()
 
 # path oprations
 
-# Users
+## Users
 
-# Register a user
-
-
+### Register a user
 @app.post(
     path='/signup',
     response_model=User,
@@ -23,11 +21,23 @@ app = FastAPI()
     tags=["Users"]
 )
 def signup():
+    """
+    This path operation register a user in the app
+
+    Parameters:
+        -Request body parameter
+            - user: UserRegister
+    
+    Return a json with the basic user information:
+        - user_id: UUID
+        - email: Emailstr
+        - last_name: str
+        - birth_date: str
+    """
     pass
 
+
 # Login a user
-
-
 @app.post(
     path='/login',
     response_model=User,
